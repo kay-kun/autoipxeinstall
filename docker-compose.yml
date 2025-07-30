@@ -1,15 +1,23 @@
 version: '3.8'
 
+networks:
+  dockernet:
+    external: true
+
 services:
   ipxe:
     build: ./docker
     container_name: ipxe-server
+    networks:
+      dockernet:
+        ipv4_address: 10.0.11.254
     environment:
-      - SERVER_IP=XXX.XXX.XXX.XXX
-      - NFS_IP=XXX.XXX.XXX.XXX
-      - SMB_IP=XXX.XXX.XXX.XXX
+      - SERVER_IP=10.0.10.11
+      - NFS_IP=10.0.10.10
+      - SMB_IP=10.0.10.10
     volumes:
-      - /appdata/ipxe:/pxeboot
+      - /mnt/smb/ipxe:/pxeboot
     ports:
       - "65100:65100"
       - "69:69/udp"
+    restart: unless-stopped
