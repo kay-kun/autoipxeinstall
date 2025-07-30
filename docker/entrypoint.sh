@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Ensure PXE directory structure exists
+mkdir -p /pxeboot/{config,firmware,os-images}
+
 echo "[INFO] Starting PXE Server Setup..."
 
 SERVER_IP="${SERVER_IP:-10.0.0.1}"
