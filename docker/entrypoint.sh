@@ -42,15 +42,36 @@ if [ ! -f "/pxeboot/config/boot_legacy.ipxe" ]; then
 cat <<EOF > /pxeboot/config/boot_legacy.ipxe
 #!ipxe
 set server_ip $SERVER_IP
+set nfs_ip $NFS_IP
+set smb_ip $SMB_IP
+set root_path /pxeboot
+
 menu PXE Boot Menu (BIOS)
 item local_disk Boot from Local HDD/SSD
-item reboot Reboot System
+item local_usb  Boot from Local USB
+item local_cd   Boot from Local CD
+item reboot     Reboot System
+item shutdown   Shutdown System
+
 choose --default local_disk --timeout 5000 selected && goto \${selected}
+
 :local_disk
 sanboot --no-describe --drive 0x80
 exit
+
+:local_usb
+sanboot --no-describe --drive 0x81
+exit
+
+:local_cd
+sanboot --no-describe --drive 0x82
+exit
+
 :reboot
 reboot
+
+:shutdown
+poweroff
 EOF
 fi
 
@@ -58,15 +79,36 @@ if [ ! -f "/pxeboot/config/boot_uefi.ipxe" ]; then
 cat <<EOF > /pxeboot/config/boot_uefi.ipxe
 #!ipxe
 set server_ip $SERVER_IP
-menu PXE Boot Menu (UEFI)
+set nfs_ip $NFS_IP
+set smb_ip $SMB_IP
+set root_path /pxeboot
+
+menu PXE Boot Menu (UEFI x86_64)
 item local_disk Boot from Local HDD/SSD
-item reboot Reboot System
+item local_usb  Boot from Local USB
+item local_cd   Boot from Local CD
+item reboot     Reboot System
+item shutdown   Shutdown System
+
 choose --default local_disk --timeout 5000 selected && goto \${selected}
+
 :local_disk
 sanboot --no-describe --drive 0x80
 exit
+
+:local_usb
+sanboot --no-describe --drive 0x81
+exit
+
+:local_cd
+sanboot --no-describe --drive 0x82
+exit
+
 :reboot
 reboot
+
+:shutdown
+poweroff
 EOF
 fi
 
