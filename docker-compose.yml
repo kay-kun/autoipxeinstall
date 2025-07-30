@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  ipxe:
+    build: ./docker
+    container_name: ipxe-server
+    environment:
+      - SERVER_IP=XXX.XXX.XXX.XXX
+      - NFS_IP=XXX.XXX.XXX.XXX
+      - SMB_IP=XXX.XXX.XXX.XXX
+    volumes:
+      - /appdata/ipxe:/pxeboot
+    ports:
+      - "65100:65100"
+      - "69:69/udp"
