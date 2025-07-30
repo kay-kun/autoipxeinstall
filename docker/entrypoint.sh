@@ -34,7 +34,7 @@ chain http://$SERVER_IP:65100/config/boot_uefi.ipxe
 EOF
 
   make bin/ipxe.pxe bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-x86_64-efi/snponly.efi EMBED=bootconfig.ipxe
-  cp bin/* /pxeboot/firmware/
+  cp -v bin/ipxe.pxe bin/undionly.kpxe bin-x86_64-efi/ipxe.efi bin-x86_64-efi/snponly.efi /pxeboot/firmware/
   wget -O /pxeboot/firmware/wimboot https://ipxe.org/wimboot
 fi
 
