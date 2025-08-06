@@ -10,11 +10,11 @@ services:
     container_name: ipxe-server
     networks:
       dockernet:
-        ipv4_address: 172.26.222.254
+        ipv4_address: 10.0.11.254
     environment:
-      - SERVER_IP=172.26.200.211
-      - NFS_IP=172.26.200.174
-      - SMB_IP=172.26.200.174
+      - SERVER_IP=10.0.10.11
+      - NFS_IP=10.0.10.10
+      - SMB_IP=10.0.10.10
     volumes:
       - /mnt/smb/ipxe:/pxeboot
     ports:
